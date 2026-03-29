@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "tutorial": {
+      "title": "Tutorial",
+      "description": "A learning resource for JavaScript and Web Development.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "The title of the tutorial." },
+        "content": { "type": "string", "description": "The markdown content of the tutorial." },
+        "category": { "type": "string", "enum": ["Basics", "Frontend", "Backend", "Build Tools"], "description": "The topic category." },
+        "author": { "type": "string", "description": "The author's name." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the tutorial was created." }
+      },
+      "required": ["title", "content", "category", "author", "createdAt"]
+    },
+    "forum_topic": {
+      "title": "Forum Topic",
+      "description": "A discussion thread in the forum.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "The topic title." },
+        "category": { "type": "string", "description": "The forum category (e.g., React, Node.js, General)." },
+        "authorId": { "type": "string", "description": "The UID of the creator." },
+        "authorName": { "type": "string", "description": "The display name of the creator." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the topic was created." },
+        "lastReplyAt": { "type": "string", "format": "date-time", "description": "When the last reply was posted." }
+      },
+      "required": ["title", "category", "authorId", "authorName", "createdAt", "lastReplyAt"]
+    },
+    "forum_post": {
+      "title": "Forum Post",
+      "description": "A reply within a forum topic.",
+      "type": "object",
+      "properties": {
+        "topicId": { "type": "string", "description": "The ID of the parent topic." },
+        "content": { "type": "string", "description": "The content of the post." },
+        "authorId": { "type": "string", "description": "The UID of the author." },
+        "authorName": { "type": "string", "description": "The display name of the author." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the post was created." }
+      },
+      "required": ["topicId", "content", "authorId", "authorName", "createdAt"]
+    },
+    "blog_post": {
+      "title": "Blog Post",
+      "description": "A news article or blog entry.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "The article title." },
+        "content": { "type": "string", "description": "The markdown content of the article." },
+        "author": { "type": "string", "description": "The author's name." },
+        "publishedAt": { "type": "string", "format": "date-time", "description": "When the article was published." },
+        "imageUrl": { "type": "string", "description": "Optional cover image URL." }
+      },
+      "required": ["title", "content", "author", "publishedAt"]
+    }
+  },
+  "firestore": {
+    "/tutorials/{tutorialId}": { "schema": "tutorial", "description": "Collection of tutorials." },
+    "/forum_topics/{topicId}": { "schema": "forum_topic", "description": "Collection of discussion topics." },
+    "/forum_topics/{topicId}/posts/{postId}": { "schema": "forum_post", "description": "Sub-collection of posts for each topic." },
+    "/blog_posts/{postId}": { "schema": "blog_post", "description": "Collection of news and blog articles." }
+  }
+}
